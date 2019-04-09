@@ -48,6 +48,7 @@ public class AemEventKafkaConsumer {
       LOG.info("finished processing incoming request: {} ", ecpKafkaEvent);
     } else {
       LOG.info("Skipping message with messageId: {}", messageId);
+      LOG.info("Skipping message with messageId: {}", messageId);
     }
     MDC.remove(ECP_REQUEST_ID);
   }
