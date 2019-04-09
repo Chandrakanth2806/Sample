@@ -1,0 +1,55 @@
+---
+spring:
+  profiles: default
+  kafka:
+    properties:
+      security:
+        protocol: SASL_SSL
+      ssl:
+        truststore:
+          location: src/main/resources/keys/kafka.client.truststore.jks
+          password: kafkadev
+      sasl:
+        mechanism: PLAIN
+        jaas:
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username="ecp_consumer_dev" password="ecp-consumer-dev";
+    topics: digitalasset
+    consumer:
+      bootstrap-servers:
+      - kafkadev:9094
+      group-id: vrssvc
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: com.lordabbett.ecp.commons.kafka.serialization.EcpKafkaEventDeserializer
+  datasource:
+    url: jdbc:postgresql://lxpgsdbd1-jsmv:5432/cs_crdm
+
+aemQueryServiceUrl: http://localhost:8099/api/v1
+biographyQueryServiceUrl: http://localhost:8094/api/v1
+---
+spring:
+  application:
+    name: ecp-email-content-svc
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      default_schema: CRDM
+      jdbc:
+        lob:
+          non_contextual_creation: true
+  datasource:
+    platform: postgres
+    username: crdm
+    password: crdmdev
+    driverClassName: org.postgresql.Driver
+server:
+  port: 8098
+
+ecp:
+  privateKey: ECP_PLATFORM_SERVICES
+
+assets:
+  biographyMapping:
+    rendition: CQ5DAM_WEB_100_100
+
